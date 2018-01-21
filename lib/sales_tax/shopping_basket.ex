@@ -16,4 +16,18 @@ defmodule ShoppingBasket do
         items: shopping_basket.items ++ [basket_item]
     }
   end
+
+  def generate_invoice(%ShoppingBasket{} = shopping_basket) do
+    invoice = Enum.reduce(shopping_basket.items, "", fn(item,acc)->
+      acc <> Integer.to_string(item.quantity)<>", "
+      <>item.product<>", "
+      <>Float.to_string(item.price)<>"\n" end)
+
+      invoice <>"\nSales Taxes: "<>Float.to_string(shopping_basket.sales_tax)<>"\n"
+            <>"Total: "<>Float.to_string(shopping_basket.total)<>"\n"
+  end
+
+  def print_invoice(content) do
+    IO.puts(content)
+  end
 end

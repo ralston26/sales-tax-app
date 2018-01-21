@@ -9,7 +9,7 @@ defmodule ReceiptParser do
 
   def init(path) do
     path
-    |> FileReader.read_file!()
+    |> FileReader.read_file!
     |> get_receipt_items
   end
 
