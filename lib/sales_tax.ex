@@ -1,16 +1,6 @@
 defmodule SalesTax do
   @moduledoc """
-  Documentation for SalesTax.
-  """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> SalesTax.hello
-      :world
-
+  Entry point for SalesTax app.
   """
 
   def main(args) do

@@ -20,7 +20,7 @@ To build escript which is an executable that can be used to run this app on any 
 
 To run the executable provide the input as a file. A sample input files are already included under priv directory and can be executed  as given below
 
-	./sales_tax -path=priv/input3.txt
+	./sales_tax --path=priv/input3.txt
 
 if you wish to use other directory for input files please provide the absolute path. 	
 
