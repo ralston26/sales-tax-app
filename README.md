@@ -57,7 +57,7 @@ The whole process has been divided into 3 problems.
 1. Parsing the input  (*receipt_parser.ex*)
 2. Calculating tax for each item (*tax_calculator.ex*)
 3. Calculating total tax and generating invoice (*shopping_basket.ex*)
-4. Writing the invoice to file (*file_writer.ex*)
+4. Writing the invoice to file (*file_utils.ex*)
 
 
 
