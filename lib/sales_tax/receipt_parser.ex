@@ -10,9 +10,9 @@ defmodule ReceiptParser do
   Reads the file and returns list of receipt items.
   """
   def init(path) do
+    # drop header
     path
     |> FileUtils.read_file()
-    # drop header
     |> Stream.drop(1)
     |> get_receipt_items()
   end
@@ -31,7 +31,7 @@ defmodule ReceiptParser do
       |> String.split(",")
       |> Enum.map(&String.trim(&1))
 
-  ReceiptItem.new(validate_quantity(quantity), validate_product(product), validate_price(price))
+    ReceiptItem.new(validate_quantity(quantity), validate_product(product), validate_price(price))
   end
 
   def update_receipt_item(receipt_item) do
@@ -58,34 +58,12 @@ defmodule ReceiptParser do
     |> String.contains?(@exemptions)
   end
 
-  # def validate_quantity(qty) do
-  #   case String.to_integer(qty) do
-  #     quantity when quantity > 0 -> quantity
-  #     {:error, reason} -> raise ArgumentError, message: "#{reason} -> Error"
-  #     _ -> raise ArgumentError, message: "#{qty} -> quantity is empty"
-  #     end
-  # end
-  #
-  # def validate_price(price) do
-  #     if (String.to_float(price) < 0) do
-  #       raise ArgumentError, message: "Price cannot be empty or less than ZERO, please check"
-  #     else Money.new(String.to_float(price))
-  #     end
-  # end
-  #
-  # def validate_product(product) do
-  #   if String.trim(product) == "" do
-  #     raise ArgumentError, message: "Product value is empty, please check"
-  #   else product
-  #   end
-  # end
-
   def validate_quantity(qty) do
     case String.to_integer(qty) do
       quantity when quantity > 0 -> quantity
       {:error, reason} -> raise ArgumentError, message: "#{reason} -> not a supported type"
       _ -> raise ArgumentError, message: "quantity #{qty}  must be greater than zero"
-      end
+    end
   end
 
   def validate_price(price) do
@@ -93,13 +71,14 @@ defmodule ReceiptParser do
       price when price >= 0 -> Money.new(price)
       {:error, reason} -> raise ArgumentError, message: "#{reason} -> not a supported type"
       _ -> raise ArgumentError, message: "price #{price}  must be >= 0"
-      end
+    end
   end
 
   def validate_product(product) do
     if String.trim(product) == "" do
       raise ArgumentError, message: "Product value is empty, please check"
-    else product
+    else
+      product
     end
   end
 end

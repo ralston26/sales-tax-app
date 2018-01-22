@@ -33,12 +33,16 @@ defmodule ReceiptParserTest do
 
   test "passing the file path that does not exit should throw an error" do
     path = Path.join("#{:code.priv_dir(:sales_tax)}", "input.txt")
-    assert_raise ArgumentError, ReceiptParser.init(path)
+    assert_raise ArgumentError, fn -> ReceiptParser.init(path) end
   end
 
   test "passing the line item should return receipt item" do
     assert ReceiptParser.parse_receipt_item("1, imported box of chocolates, 10.00") ==
-             %ReceiptItem{quantity: 1, product: "imported box of chocolates", price: %Money{amount: 1000}}
+             %ReceiptItem{
+               quantity: 1,
+               product: "imported box of chocolates",
+               price: %Money{amount: 1000}
+             }
   end
 
   test "sets imported as true and exempted as true" do
@@ -110,11 +114,11 @@ defmodule ReceiptParserTest do
   end
 
   test "validate_price , price string is negative" do
-    assert ReceiptParser.validate_price("-2.00") == %Money{amount: 0}
+    assert_raise ArgumentError, fn -> ReceiptParser.validate_price("-2.00") end
   end
 
   test "validate_price , price is empty string" do
-    assert_raise(ArgumentError, ReceiptParser.validate_price(""))
+    assert_raise ArgumentError, fn -> ReceiptParser.validate_price("") end
   end
 
   test "validate_quantity , quantity string is greater than 0" do
@@ -122,15 +126,14 @@ defmodule ReceiptParserTest do
   end
 
   test "validate_quantity , quantity string is zero" do
-    assert_raise(ArgumentError, ReceiptParser.validate_quantity("0"))
+    assert_raise ArgumentError, fn -> ReceiptParser.validate_quantity("0") end
   end
 
   test "validate_quantity , quantity string is negative" do
-    assert_raise(ArgumentError, ReceiptParser.validate_quantity("-2"))
+    assert_raise ArgumentError, fn -> ReceiptParser.validate_quantity("-2") end
   end
 
   test "validate_quantity , quantity is empty string" do
-    assert_raise(ArgumentError, ReceiptParser.validate_quantity(""))
+    assert_raise ArgumentError, fn -> ReceiptParser.validate_quantity("") end
   end
-
 end

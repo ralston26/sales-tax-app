@@ -8,11 +8,11 @@ defmodule FileUtils do
   Validates file throws error when file is not found or file size is empty.
   """
   def validate_file(path) do
-    case File.stat path do
-      {:ok, %{size: size}}  when size > 0 -> path
+    case File.stat(path) do
+      {:ok, %{size: size}} when size > 0 -> path
       {:error, _} -> raise ArgumentError, message: "#{path} -> file not found"
-      {_,_} -> raise ArgumentError, message: "#{path} -> file is empty"
-       end
+      {_, _} -> raise ArgumentError, message: "#{path} -> file is empty"
+    end
   end
 
   @doc """

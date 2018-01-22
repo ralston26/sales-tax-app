@@ -27,11 +27,10 @@ defmodule MoneyTest do
   end
 
   test "cash rounding" do
-    assert Money.cash_rounding(%Money{amount: 105678}) == %Money{amount: 105680}
+    assert Money.cash_rounding(%Money{amount: 105_678}) == %Money{amount: 105_680}
   end
 
   test "to string" do
-    assert Money.to_string(%Money{amount: 105678}) == "1056.78"
+    assert Money.to_string(%Money{amount: 105_678}) == "1056.78"
   end
-
 end
