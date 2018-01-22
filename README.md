@@ -1,9 +1,9 @@
-#Basic Sales Tax Problem
-##Introduction
+# Basic Sales Tax Problem
+## Introduction
 
 This is an implementation for Basic sales tax problem in **Elixir** using *Functional Design*.
 
-###Building and Running
+### Building and Running
 The code uses Mix build system and unit test cases are written in ExUnit. The following commands can be used in terminal/command line after [installing Elixir](https://elixir-lang.org/install.html).
 
 To compile the code:
@@ -42,7 +42,7 @@ Sample output file: input3_output.txt , Output file is generated under same dire
 	Sales Taxes: 6.70
 	Total: 74.68
 
-##Assumptions
+## Assumptions
 
 * The *Price* in input file is price of a single unit of line item.
 * For cash rounding the sales tax to 5 cent, the ceil value is taken.
@@ -50,7 +50,7 @@ Sample output file: input3_output.txt , Output file is generated under same dire
 * Products with the keyword "imported" will be identified as imported goods and the tax amount will be calculated accordingly.
 * Exempted products are identified based on pre-defined keywords.  
 
-##Implementation
+## Implementation
 
 The whole process has been divided into 3 problems.
 
@@ -61,14 +61,14 @@ The whole process has been divided into 3 problems.
 
 
 
-###Money matters
+### Money matters
 > I've tried "keeping it real" but then I found "things just don't add up". #IEEE754Joke - [Someone on twitter](https://twitter.com/chrisoldwood/status/632104876705730560)
 
 The *money.ex* is a very simple implementation of Money Pattern of [Martin Fowler](https://martinfowler.com/eaaCatalog/money.html). All monetory values in the application like item price, sales tax etc. are stored using this Money module in *money.ex*.
 
 The *cash_rounding* method in *Money* module is used to round the sales tax to nearest 5 cent.
 
-###Config
+### Config
 The exempted items and the tax slabs are kept in *config/config.exs*.
 
 	config :sales_tax,
@@ -77,7 +77,7 @@ The exempted items and the tax slabs are kept in *config/config.exs*.
 	imported_tax_rate: 5
 Any changes in slabs or exemption keywords can be made here.
 
-###Future enhancements
+### Future enhancements
 
 * As this being as simple command line app, the power of Elixir's concurrency hasn't been used much in this project. Future implementations can be made to run concurrently using functionalities of OTP.
 
@@ -85,7 +85,7 @@ Any changes in slabs or exemption keywords can be made here.
 * As the computations are very simple, a very basic *Money* module has been implemented. But for complex logic & support for different currencies the *Money* module has to be updated to provide i18n support or packages like [Money](https://hex.pm/packages/money/) can be used after carefully testing it.
 * Can be updated to MVC pattern / Rest API using Phoenix framework and get rid of usage of input and output files and use JSON,
 
-###Code Style and Formatting
+### Code Style and Formatting
 
 Used latest Elixir 1.6 option for auto formatting , [Autoformatting](https://hashrocket.com/blog/posts/format-your-elixir-code-now)
 
@@ -93,7 +93,7 @@ Used latest Elixir 1.6 option for auto formatting , [Autoformatting](https://has
 
 And [credo](https://hex.pm/packages/credo) for static code analysis
 
-###References
+### References
 Since this is my first week with Elixir, this could not have been achieved without the following :)
 
 * [The Elixir Language](https://elixir-lang.org)
