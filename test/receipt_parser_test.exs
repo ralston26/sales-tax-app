@@ -33,7 +33,7 @@ defmodule ReceiptParserTest do
 
   test "passing the file path that does not exit should throw an error" do
     path = Path.join("#{:code.priv_dir(:sales_tax)}", "input.txt")
-    catch_error(ReceiptParser.init(path))
+    assert_raise ArgumentError, ReceiptParser.init(path)
   end
 
   test "passing the line item should return receipt item" do
@@ -100,4 +100,37 @@ defmodule ReceiptParserTest do
                exempted: false
              }
   end
+
+  test "validate_price , price string is greater than 0" do
+    assert ReceiptParser.validate_price("56.89") == %Money{amount: 5689}
+  end
+
+  test "validate_price , price string is zero" do
+    assert ReceiptParser.validate_price("0.00") == %Money{amount: 0}
+  end
+
+  test "validate_price , price string is negative" do
+    assert ReceiptParser.validate_price("-2.00") == %Money{amount: 0}
+  end
+
+  test "validate_price , price is empty string" do
+    assert_raise(ArgumentError, ReceiptParser.validate_price(""))
+  end
+
+  test "validate_quantity , quantity string is greater than 0" do
+    assert ReceiptParser.validate_quantity("5") == 5
+  end
+
+  test "validate_quantity , quantity string is zero" do
+    assert_raise(ArgumentError, ReceiptParser.validate_quantity("0"))
+  end
+
+  test "validate_quantity , quantity string is negative" do
+    assert_raise(ArgumentError, ReceiptParser.validate_quantity("-2"))
+  end
+
+  test "validate_quantity , quantity is empty string" do
+    assert_raise(ArgumentError, ReceiptParser.validate_quantity(""))
+  end
+
 end

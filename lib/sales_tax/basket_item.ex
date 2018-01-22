@@ -13,6 +13,10 @@ defmodule BasketItem do
           item_tax: Money.t()
         }
 
+  @doc """
+  Transforms receipt item to basket item with updated price and item tax for each
+  receipt item.
+  """
   def new(%ReceiptItem{} = receipt_item) do
     item_tax = compute_item_tax(receipt_item)
 

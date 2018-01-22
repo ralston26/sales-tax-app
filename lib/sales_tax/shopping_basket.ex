@@ -6,6 +6,10 @@ defmodule ShoppingBasket do
 
   def new, do: %__MODULE__{}
 
+  @doc """
+  Transforms receipt item to basket item and adds to shopping basket, computing
+  total and sales tax upon add of each item.
+  """
   def add_item(%__MODULE__{} = shopping_basket, %ReceiptItem{} = receipt_item) do
     basket_item = BasketItem.new(receipt_item)
 
@@ -17,9 +21,13 @@ defmodule ShoppingBasket do
     }
   end
 
+  @doc """
+  Transforms shopping basket item to string for display and writing invoice to file.
+  """
   def generate_invoice(%ShoppingBasket{items: items, sales_tax: sales_tax, total: total}) do
-    invoice = Enum.reduce(items, "",
-    fn %BasketItem{quantity: quantity, product: product, price: price},acc ->
+    invoice =
+      Enum.reduce(items, "", fn %BasketItem{quantity: quantity, product: product, price: price},
+                                acc ->
         acc <> join(Integer.to_string(quantity), product, Money.to_string(price))
       end)
 
@@ -29,7 +37,6 @@ defmodule ShoppingBasket do
   end
 
   defp join(quantity, product, price) do
-    quantity<> ", " <> product <> ", " <> price <> "\n"
+    quantity <> ", " <> product <> ", " <> price <> "\n"
   end
-
 end
