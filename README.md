@@ -6,6 +6,10 @@ This is an implementation for Basic sales tax problem in **Elixir** using *Funct
 ### Building and Running
 The code uses Mix build system and unit test cases are written in ExUnit. The following commands can be used in terminal/command line after [installing Elixir](https://elixir-lang.org/install.html).
 
+To get the dependencies:
+
+  mix deps.get
+
 To compile the code:
 
 	mix compile
