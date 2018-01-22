@@ -8,7 +8,7 @@ The code uses Mix build system and unit test cases are written in ExUnit. The fo
 
 To get the dependencies:
 
-  mix deps.get
+  	mix deps.get
 
 To compile the code:
 
