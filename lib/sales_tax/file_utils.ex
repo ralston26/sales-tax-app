@@ -26,7 +26,9 @@ defmodule FileReader do
 
   def write_to_file!(content, path) do
     path
-    |> get_output_path |> File.write!(content)
+    |> get_output_path
+    |> File.write!(content)
+
     IO.puts(content)
   end
 end

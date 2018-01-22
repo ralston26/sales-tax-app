@@ -3,13 +3,11 @@ defmodule ReceiptParser do
   Documentation for SalesTax.
   """
 
-  # TODO  dynamic path
-
   @exemptions Application.get_env(:sales_tax, :exempted)
 
   def init(path) do
     path
-    |> FileReader.read_file!
+    |> FileReader.read_file!()
     |> get_receipt_items
   end
 
@@ -28,13 +26,13 @@ defmodule ReceiptParser do
       |> Enum.map(&String.trim(&1))
 
     quantity = String.to_integer(quantity)
-    price = String.to_float(price)
+    price = Money.new(String.to_float(price))
     ReceiptItem.new(quantity, product, price)
   end
 
   def update_receipt_item(receipt_item) do
-    # Note in real time these two fields are the details obtained from
-    # product catalogue API or db, for simplicity lets determine the category
+    # Note: In real time scenario these two fields are the details obtained from
+    # the product catalogue API or DB, for simplicity lets determine the category
     # and imported fields based on the item name in the receipt line item
     %ReceiptItem{
       receipt_item
@@ -44,10 +42,14 @@ defmodule ReceiptParser do
   end
 
   defp is_imported?(item_name) do
-    String.contains?(item_name, "imported")
+    item_name
+    |> String.downcase
+    |> String.contains?("imported")
   end
 
   defp is_exempted?(item_name) do
-    String.contains?(item_name, @exemptions)
+    item_name
+    |> String.downcase
+    |> String.contains?(@exemptions)
   end
 end

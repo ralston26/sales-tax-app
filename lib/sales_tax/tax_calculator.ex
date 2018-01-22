@@ -17,7 +17,9 @@ defmodule TaxCalculator do
 
   def compute_item_tax(%ReceiptItem{} = receipt_item) do
     tax_rate = get_tax_rate(receipt_item.imported, receipt_item.exempted)
-    item_tax = receipt_item.quantity * receipt_item.price * tax_rate / 100
-    Float.ceil(item_tax * 20) / 20
+
+    Money.multiply(receipt_item.price, receipt_item.quantity)
+    |> Money.multiply(tax_rate / 100)
+    |> Money.cash_rounding()
   end
 end

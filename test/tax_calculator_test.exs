@@ -26,39 +26,39 @@ defmodule TaxCalculatorTest do
     assert TaxCalculator.compute_item_tax(%ReceiptItem{
              exempted: true,
              imported: false,
-             price: 12.49,
+             price: %Money{amount: 1249},
              product: "book",
              quantity: 1
-           }) == 0.0
+           }) == %Money{amount: 0}
   end
 
   test "get computed item tax for tax exempted item and imported" do
     assert TaxCalculator.compute_item_tax(%ReceiptItem{
              exempted: true,
              imported: true,
-             price: 12.49,
+             price: %Money{amount: 1249},
              product: "imported book",
              quantity: 1
-           }) == 0.65
+           }) == %Money{amount: 65}
   end
 
   test "get computed item tax for taxed item and imported" do
     assert TaxCalculator.compute_item_tax(%ReceiptItem{
              exempted: false,
              imported: true,
-             price: 27.99,
+             price: %Money{amount: 2799},
              product: "imported bottle of perfume",
              quantity: 1
-           }) == 4.2
+           }) == %Money{amount: 420}
   end
 
   test "get computed item tax for non imported taxed item" do
     assert TaxCalculator.compute_item_tax(%ReceiptItem{
              exempted: false,
              imported: false,
-             price: 18.99,
+             price: %Money{amount: 1899},
              product: "imported bottle of perfume",
              quantity: 1
-           }) == 1.9
+           }) == %Money{amount: 190}
   end
 end

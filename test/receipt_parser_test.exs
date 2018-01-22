@@ -10,21 +10,21 @@ defmodule ReceiptParserTest do
                %ReceiptItem{
                  exempted: true,
                  imported: false,
-                 price: 12.49,
+                 price: %Money{amount: 1249},
                  product: "book",
                  quantity: 1
                },
                %ReceiptItem{
                  exempted: false,
                  imported: false,
-                 price: 14.99,
+                 price: %Money{amount: 1499},
                  product: "music cd",
                  quantity: 1
                },
                %ReceiptItem{
                  exempted: true,
                  imported: false,
-                 price: 0.85,
+                 price: %Money{amount: 85},
                  product: "chocolate bar",
                  quantity: 1
                }
@@ -38,19 +38,19 @@ defmodule ReceiptParserTest do
 
   test "passing the line item should return receipt item" do
     assert ReceiptParser.parse_receipt_item("1, imported box of chocolates, 10.00") ==
-             %ReceiptItem{quantity: 1, product: "imported box of chocolates", price: 10.00}
+             %ReceiptItem{quantity: 1, product: "imported box of chocolates", price: %Money{amount: 1000}}
   end
 
   test "sets imported as true and exempted as true" do
     assert ReceiptParser.update_receipt_item(%ReceiptItem{
              quantity: 1,
              product: "imported box of chocolates",
-             price: 10.00
+             price: %Money{amount: 1000}
            }) ==
              %ReceiptItem{
                quantity: 1,
                product: "imported box of chocolates",
-               price: 10.00,
+               price: %Money{amount: 1000},
                imported: true,
                exempted: true
              }
@@ -60,12 +60,12 @@ defmodule ReceiptParserTest do
     assert ReceiptParser.update_receipt_item(%ReceiptItem{
              quantity: 1,
              product: "box of chocolates",
-             price: 10.00
+             price: %Money{amount: 1000}
            }) ==
              %ReceiptItem{
                quantity: 1,
                product: "box of chocolates",
-               price: 10.00,
+               price: %Money{amount: 1000},
                imported: false,
                exempted: true
              }
@@ -75,12 +75,12 @@ defmodule ReceiptParserTest do
     assert ReceiptParser.update_receipt_item(%ReceiptItem{
              quantity: 1,
              product: "perfume",
-             price: 10.00
+             price: %Money{amount: 1000}
            }) ==
              %ReceiptItem{
                quantity: 1,
                product: "perfume",
-               price: 10.00,
+               price: %Money{amount: 1000},
                imported: false,
                exempted: false
              }
@@ -90,12 +90,12 @@ defmodule ReceiptParserTest do
     assert ReceiptParser.update_receipt_item(%ReceiptItem{
              quantity: 1,
              product: "imported perfume",
-             price: 10.00
+             price: %Money{amount: 1000}
            }) ==
              %ReceiptItem{
                quantity: 1,
                product: "imported perfume",
-               price: 10.00,
+               price: %Money{amount: 1000},
                imported: true,
                exempted: false
              }

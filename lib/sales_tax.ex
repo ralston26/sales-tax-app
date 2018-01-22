@@ -12,8 +12,6 @@ defmodule SalesTax do
       :world
 
   """
-  # @path_env %{dev: ["lib/priv", "input2.txt"]}
-  # @path Path.join(@path_env[Mix.env])
 
   def main(args) do
     args |> parse_args |> process
@@ -24,11 +22,12 @@ defmodule SalesTax do
   end
 
   def process(options) do
+    # |> ShoppingBasket.print_invoice
     ReceiptParser.init(options)
-    |> List.foldl(ShoppingBasket.new, fn receiptItem, shopping_basket
-    -> ShoppingBasket.add_item(shopping_basket, receiptItem) end)
-    |> ShoppingBasket.generate_invoice
-    #|> ShoppingBasket.print_invoice
+    |> List.foldl(ShoppingBasket.new(), fn receiptItem, shopping_basket ->
+      ShoppingBasket.add_item(shopping_basket, receiptItem)
+    end)
+    |> ShoppingBasket.generate_invoice()
     |> FileReader.write_to_file!(options)
   end
 
