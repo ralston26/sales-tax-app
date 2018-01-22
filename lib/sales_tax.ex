@@ -28,11 +28,11 @@ defmodule SalesTax do
       ShoppingBasket.add_item(shopping_basket, receiptItem)
     end)
     |> ShoppingBasket.generate_invoice()
-    |> FileReader.write_to_file!(options)
+    |> FileUtils.write_to_file!(options)
   end
 
   defp parse_args(args) do
-    {options, _, _} = OptionParser.parse(args, switches: [name: :string])
-    Path.absname(options[:name])
+    {options, _, _} = OptionParser.parse(args, switches: [path: :string])
+    Path.absname(options[:path])
   end
 end

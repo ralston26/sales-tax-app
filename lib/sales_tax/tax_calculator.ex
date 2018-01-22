@@ -1,11 +1,13 @@
 defmodule TaxCalculator do
   @moduledoc """
-  Documentation for SalesTax.
+  Handles tax relates computations.
   """
-  @basic_tax_rate 10
-  @imported_tax_rate 5
+  @basic_tax_rate Application.get_env(:sales_tax, :basic_tax_rate)
+  @imported_tax_rate Application.get_env(:sales_tax, :imported_tax_rate)
 
-  # determines the tax rate of an item
+  @doc """
+  Calculates the total tax rate for the receipt item.
+  """
   def get_tax_rate(imported, exempted) do
     case {exempted, imported} do
       {true, true} -> @imported_tax_rate
@@ -15,6 +17,9 @@ defmodule TaxCalculator do
     end
   end
 
+  @doc """
+  Calculates the total tax amount per receipt item.
+  """
   def compute_item_tax(%ReceiptItem{} = receipt_item) do
     tax_rate = get_tax_rate(receipt_item.imported, receipt_item.exempted)
 

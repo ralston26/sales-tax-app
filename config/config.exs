@@ -10,7 +10,11 @@ use Mix.Config
 
 # You can configure your application as:
 #
-config :sales_tax, exempted: ["pill", "chocolate", "book"]
+config :sales_tax,
+exempted: ["pill", "chocolate", "book"],
+basic_tax_rate: 10,
+imported_tax_rate: 5
+
 #
 # and access this configuration in your application as:
 #

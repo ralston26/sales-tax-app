@@ -1,8 +1,12 @@
 defmodule Money do
+  @moduledoc """
+  Custom sturct to hold amount as integer instead of handling directly with float .
+  """
+  defstruct amount: 0
+
   @type t :: %__MODULE__{
           amount: integer
         }
-  defstruct amount: 0
 
   def new(float) when is_float(float) do
     %Money{amount: round(float * 100)}

@@ -1,13 +1,13 @@
 defmodule ReceiptParser do
   @moduledoc """
-  Documentation for SalesTax.
+  Parses the input file and transforms the items to receipt items.
   """
 
   @exemptions Application.get_env(:sales_tax, :exempted)
 
   def init(path) do
     path
-    |> FileReader.read_file!()
+    |> FileUtils.read_file!()
     |> get_receipt_items
   end
 
@@ -31,25 +31,26 @@ defmodule ReceiptParser do
   end
 
   def update_receipt_item(receipt_item) do
+    # HACK
     # Note: In real time scenario these two fields are the details obtained from
     # the product catalogue API or DB, for simplicity lets determine the category
     # and imported fields based on the item name in the receipt line item
     %ReceiptItem{
       receipt_item
-      | imported: is_imported?(receipt_item.product),
-        exempted: is_exempted?(receipt_item.product)
+      | imported: imported?(receipt_item.product),
+        exempted: exempted?(receipt_item.product)
     }
   end
 
-  defp is_imported?(item_name) do
+  defp imported?(item_name) do
     item_name
-    |> String.downcase
+    |> String.downcase()
     |> String.contains?("imported")
   end
 
-  defp is_exempted?(item_name) do
+  defp exempted?(item_name) do
     item_name
-    |> String.downcase
+    |> String.downcase()
     |> String.contains?(@exemptions)
   end
 end

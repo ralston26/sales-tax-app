@@ -18,15 +18,18 @@ defmodule ShoppingBasket do
   end
 
   def generate_invoice(%ShoppingBasket{items: items, sales_tax: sales_tax, total: total}) do
-    invoice =
-      Enum.reduce(items, "", fn %BasketItem{quantity: quantity, product: product, price: price},
-                                acc ->
-        acc <>
-          Integer.to_string(quantity) <> ", " <> product <> ", " <> Money.to_string(price) <> "\n"
+    invoice = Enum.reduce(items, "",
+    fn %BasketItem{quantity: quantity, product: product, price: price},acc ->
+        acc <> join(Integer.to_string(quantity), product, Money.to_string(price))
       end)
 
     invoice <>
       "\nSales Taxes: " <>
       Money.to_string(sales_tax) <> "\n" <> "Total: " <> Money.to_string(total) <> "\n"
   end
+
+  defp join(quantity, product, price) do
+    quantity<> ", " <> product <> ", " <> price <> "\n"
+  end
+
 end

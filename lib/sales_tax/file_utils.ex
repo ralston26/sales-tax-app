@@ -1,6 +1,6 @@
-defmodule FileReader do
+defmodule FileUtils do
   @moduledoc """
-  Documentation for SalesTax.
+  File utils to handle read and write.
   """
 
   @doc """
@@ -12,6 +12,8 @@ defmodule FileReader do
       :world
 
   """
+  @output_suffix "_output"
+
   def read_file!(path) do
     # discard header
     path
@@ -21,7 +23,7 @@ defmodule FileReader do
   end
 
   defp get_output_path(path) do
-    Path.absname(Path.rootname(path) <> "_op" <> Path.extname(path))
+    Path.absname(Path.rootname(path) <> @output_suffix <> Path.extname(path))
   end
 
   def write_to_file!(content, path) do
