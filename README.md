@@ -79,7 +79,7 @@ Any changes in slabs or exemption keywords can be made here.
 
 ###Future enhancements
 
-* As this being as simple command line app, the power of Elixir's concurrency hasn't been used much in this project. Future implementations can be made to run concurrently using OTP GenServer.
+* As this being as simple command line app, the power of Elixir's concurrency hasn't been used much in this project. Future implementations can be made to run concurrently using functionalities of OTP.
 
 * Any new taxes like VAT, GST can be easily added to the existing implementation to the *TaxCalculator* module.
 * As the computations are very simple, a very basic *Money* module has been implemented. But for complex logic & support for different currencies the *Money* module has to be updated to provide i18n support or packages like [Money](https://hex.pm/packages/money/) can be used after carefully testing it.
